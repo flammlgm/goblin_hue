@@ -75,8 +75,8 @@ const config = {
     },
     colors: {
       'gold': '#bdb595',
-      'dbrown': '#292524',
-      'brown': '#1c1917',
+      'brown': '#292524',
+      'dbrown': '#1c1917',
     }
   },
   plugins: [require("tailwindcss-animate")],

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="h-screen">
       <Header />
-      <div id="screen" className='bg-[#292524] 
+      <div id="screen" className='bg-brown 
       w-auto 
       h-[90%]
       text-gold 

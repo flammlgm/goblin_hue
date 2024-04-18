@@ -1,7 +1,7 @@
 const Header = () => {
     return (
-        <div className='bg-dbrown w-screen h-[8%] text-gold font-sans'>
-            <header className='bg-brown container mx-auto flex h-full'>
+        <div className='bg-brown w-screen h-[8%] text-gold font-sans'>
+            <header className='bg-dbrown container mx-auto flex h-full'>
                 <div className='w-screen flex pt-50px items-center'>
                     <div className='ml-4 flex items-center'>
                         <img src='../images/logo.png' width={45} />
