@@ -1,21 +1,26 @@
 import Image from "next/image";
+import Header from "./components/header";
+import Workspace from "./components/workspace";
+import SpriteMenu from "./components/sprite-menu";
 
 
 export default function Home() {
   return (
-    <>
-    <div className = 'bg-[#292524] w-screen h-screen text-[#bdb595] font-sans'>
-      <header className='bg-[#1c1917] container mx-auto flex'>
-      
-        <div className='flex justify-between pt-50px items-center'>
-          <img src='../images/logo.png' className='w-7 h-6'/>
-          <div>
-            <span className='font-bold text-0.6xl '>Goblin Hue</span>
-          
-          </div>
-        </div>
-      </header>
+    <div className="h-screen">
+      <Header />
+      <div id="screen" className='bg-brown 
+      w-auto 
+      h-[92%]
+      text-gold 
+       font-sans 
+       flex 
+       items-stretch
+       '>
+
+        <Workspace />
+        <SpriteMenu />
+      </div>
     </div>
-    </>
+
   );
 }
