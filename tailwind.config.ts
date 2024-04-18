@@ -7,7 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -73,6 +73,11 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
+    colors: {
+      'gold': '#bdb595',
+      'dbrown': '#292524',
+      'brown': '#1c1917',
+    }
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config
