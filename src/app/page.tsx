@@ -10,7 +10,7 @@ export default function Home() {
       <Header />
       <div id="screen" className='bg-brown 
       w-auto 
-      h-[90%]
+      h-[92%]
       text-gold 
        font-sans 
        flex 
