@@ -2,9 +2,8 @@ const Header = () => {
     return (
         <div className='bg-[#292524] w-screen h-screen text-[#bdb595] font-sans'>
             <header className='bg-[#1c1917] container mx-auto flex'>
-
                 <div className='w-screen flex pt-50px items-center'>
-                    <div className='flex items-center'>
+                    <div className='ml-4 flex items-center'>
                         <img src='../images/logo.png' width={45} />
                         <span className='font-bold text-0.6xl mr-auto'>Goblin Hue</span>
                     </div>
