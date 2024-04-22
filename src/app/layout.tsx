@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ["latin", "cyrillic"] });
 export const metadata: Metadata = {
   title: "Goblin Hue",
   description: "Редактор пиксельных интерьеров",
+
 };
 
 export default function RootLayout({
