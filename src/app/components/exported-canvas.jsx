@@ -64,18 +64,6 @@ function EditableCanvas() {
     }
 
 
-    function importFromJson(e) {
-        axios.get('http://localhost:8080/v1/events/json/')
-            .then(response => {
-                canvas.current.loadFromJSON(response.data);
-                setCanvasState(response.data);
-            });
-    }
-
-    function exportToJson(e) {
-        console.log(JSON.stringify(canvas.current))
-    }
-
     function submitURL(e) {
         let url = document.getElementById("input").value;
         fabric.FabricImage.fromURL(
