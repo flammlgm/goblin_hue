@@ -2,11 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
+
+@import url('Group.css');
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 0 0% 3.9%;
+    }
+  }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -32,3 +42,9 @@ body {
   }
 }
 
+  @layer base {
+
+    body {
+      @layer bg-background text-foreground;
+    }
+  }
