@@ -3,6 +3,9 @@ import * as fabric from "fabric";
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Fullscreen } from 'lucide-react';
+import { useFabricJSEditor } from 'fabricjs-react';
+
+
 
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
@@ -12,7 +15,7 @@ const EditableCanvas = () => {
 
     // const brown, dbrown, gold = '', '', ''
 
-    const { selectedObjects, editor, onReady } = useFabricJSEditor();
+    const { editor, onReady } = useFabricJSEditor();
 
     const ref = useRef();
 
@@ -154,7 +157,11 @@ const EditableCanvas = () => {
         fabric.FabricImage.fromURL('http://fabricjs.com/article_assets/9.png', function (oImg) {
             canvas.current.add(oImg);
         });
+
     }
+    const onAddCircle = () => {
+        editor.addCircle();
+    };
 
     return (
         <>
@@ -164,7 +171,7 @@ const EditableCanvas = () => {
                 <button className='border-2' onClick={addBrown}>Добавить бурого</button>
                 <button className='border-2' onClick={showActiveElement}>Show active element</button>
                 <button className='border-2' onClick={deleteElement}>Delete Element</button>
-                <button className='border-2' onClick={undo}>undo</button>
+                <button className='border-2' onClick={onAddCircle}>Add Circle</button>
                 <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>Print As Image</a>
                 <br />
                 <form>
