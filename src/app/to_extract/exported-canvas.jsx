@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as fabric from "fabric";
+import { fabric } from "fabric";
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Fullscreen } from 'lucide-react';
-import { useFabricJSEditor } from 'fabricjs-react';
 
 
 
-const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 const EditableCanvas = () => {
 
@@ -15,8 +13,7 @@ const EditableCanvas = () => {
 
     // const brown, dbrown, gold = '', '', ''
 
-    const { editor, onReady } = useFabricJSEditor();
-
+    // const { selectedObjects, canvas.current, onReady } = useFabricJScanvas.current();
     const ref = useRef();
 
     const [canvasState, setCanvasState] = useState('');
@@ -30,7 +27,7 @@ const EditableCanvas = () => {
     useEffect(() => {
         canvas.current = initCanvas();
 
-        canvas.current.on("mouse:over", () => {
+        canvas?.current.on("mouse:over", () => {
         }, []);
 
         return () => {
@@ -40,28 +37,18 @@ const EditableCanvas = () => {
     }, []);
 
     const initCanvas = () => (
-
         new fabric.Canvas('canvas', {
-            height: 480,
-            width: 640,
+            height: 600,
+            width: 800,
             backgroundColor: canvasColour,
             selection: false,
             renderOnAddRemove: true,
         })
     );
 
-    function handleWheel(e) {
-        e.preventDefault();
-        const { deltaY } = e;
-        if (!draggind) {
-            setZoom((zoom) =>
-                clamp(zoom + 1 * 1 * -1, 0.01, 20)
-            );
-        }
-    };
 
     useEffect(() => {
-        canvas.current.on('mouse:wheel', function (opt) {
+        canvas.current?.on('mouse:wheel', function (opt) {
             var delta = opt.e.deltaY;
             var zoom = canvas.current.getZoom();
             zoom *= 0.999 ** delta;
@@ -89,6 +76,7 @@ const EditableCanvas = () => {
         })
     }, []);
 
+
     function addTextToCanvas(e) {
         let textBox = new fabric.IText("Я текстовое поле!", {
             left: 100,
@@ -98,6 +86,7 @@ const EditableCanvas = () => {
             fontFamily: 'serif'
         });
         canvas.current.add(textBox);
+
     }
 
 
@@ -105,15 +94,24 @@ const EditableCanvas = () => {
     function submitURL(e) {
         let url = document.getElementById("input").value;
         console.log(`adding image from source ${url}`)
-        fabric.FabricImage.fromURL(url, function (img) {
-            img.set({
-                width: canvas.width / 2,
-                height: canvas.height / 2
-            });
-            canvas.add(img).renderAll().setActiveObject(img);
-        });
+        fabric.Image.fromURL(
+            url,
+            function (img) {
+                var oImg = img.set({ left: 50, top: 100 }).scale(0.9);
+                canvas.current.add(oImg).renderAll();
+            },
+            { crossOrigin: "anonymous" });
     }
+    function addBrown(e) {
+        console.log(`adding image from source 'http://fabricjs.com/assets/pug_small.jpg'`)
+        fabric.Image.fromURL('http://fabricjs.com/assets/pug_small.jpg', function (myImg) {
 
+            //i create an extra var for to change some image properties
+            var img1 = myImg.set({ left: 100, top: 100 });
+            canvas.current.add(img1).renderAll();;
+        },
+            { crossOrigin: "anonymous" });
+    }
     function convertToImg(e) {
         // перед загрузкой, надо его отзумить в полный размер
         //   const svg = canvas.current.toSVG();
@@ -153,25 +151,19 @@ const EditableCanvas = () => {
     useHotkeys('ctrl + e', hotKeyDownload)
     useHotkeys('s', hotKeyDownload)
 
-    function addBrown() {
-        fabric.FabricImage.fromURL('http://fabricjs.com/article_assets/9.png', function (oImg) {
-            canvas.current.add(oImg);
-        });
-
-    }
-    const onAddCircle = () => {
-        editor.addCircle();
-    };
-
     return (
         <>
-            <div ref={ref} >
-                <canvas id="canvas" ref={ref} onReady={onReady} />
+            {/* <FabricJSCanvas
+                className="h-full w-[100%]"
+                onReady={onReady}
+                onWheel={wheelHandler} /> */}
+            <div ref={ref}>
+                <canvas id="canvas" ref={ref} />
+
                 <button className='border-2' onClick={addTextToCanvas}>Add Text</button>
                 <button className='border-2' onClick={addBrown}>Добавить бурого</button>
                 <button className='border-2' onClick={showActiveElement}>Show active element</button>
                 <button className='border-2' onClick={deleteElement}>Delete Element</button>
-                <button className='border-2' onClick={onAddCircle}>Add Circle</button>
                 <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>Print As Image</a>
                 <br />
                 <form>
