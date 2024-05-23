@@ -25,8 +25,8 @@ const EditableCanvas = () => {
     const canvas = useRef(null);
     var grid = 50;
     var unitScale = 10;
-    var canvasWidth = 100 * unitScale;
-    var canvasHeight = 100 * unitScale;
+    var canvasHeight = 60 * unitScale;
+    var canvasWidth = 80 * unitScale;
 
     // create grid
 
@@ -50,14 +50,18 @@ const EditableCanvas = () => {
             });
         });
         canvas.current.on('object:modified', function (options) {
-            var newWidth = (Math.round(options.target.getScaledHeight() / grid)) * grid;
             var newHeight = (Math.round(options.target.getScaledWidth() / grid)) * grid;
-
+            var newWidth = (Math.round(options.target.getScaledHeight() / grid)) * grid;
+            var oldHeight = (Math.round((options.target.getScaledHeight() / options.target.height) / grid)) * grid;
+            var oldWidth = (Math.round(options.target.width / grid)) * grid;
+            // var oldWidth = options.target.width
+            //newHeight / oldHeight
             options.target.set({
+                scaleX: newWidth,
+                scaleY: 1,
                 width: newWidth,
-                height: newHeight,
-                scaleX: 1,
-                scaleY: 1
+                height: newHeight
+
             });
         });
 
@@ -128,7 +132,17 @@ const EditableCanvas = () => {
         fabric.Image.fromURL(
             url,
             function (img) {
-                var oImg = img.set({ left: 50, top: 100 }).scale(0.9);
+                const oldWidth = img.width
+                const oldHeight = img.height
+                const gridWidth = (Math.round(img.width / grid)) * grid
+                const gridHeight = (Math.round(img.height / grid)) * grid
+
+                var oImg = img.set({
+                    left: 50,
+                    top: 100,
+                    scaleX: oldWidth / gridWidth,
+                    ScaleY: oldHeight / gridHeight,
+                });
                 canvas.current.add(oImg).renderAll();
             },
             { crossOrigin: "anonymous" });
