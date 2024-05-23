@@ -38,8 +38,8 @@ const EditableCanvas = () => {
         }, []);
         // рисуем сетку
         for (var i = 0; i < (canvasWidth / grid); i++) {
-            canvas.current.add(new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: 'line', stroke: '#ccc', selectable: false }));
-            canvas.current.add(new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: 'line', stroke: '#ccc', selectable: false }))
+            canvas.current.add(new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: 'line', stroke: '#292524', selectable: false }));
+            canvas.current.add(new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: 'line', stroke: '#292524', selectable: false }))
         }
 
         // привязывание к сетке
@@ -129,9 +129,12 @@ const EditableCanvas = () => {
                 var oImg = img.set({
                     left: 50,
                     top: 100,
-
+                    lockRotation: true
                 });
-                canvas.current.add(oImg).renderAll();
+                oImg.setControlsVisibility({ mtr: false })
+                canvas.current
+                    .add(oImg)
+                    .renderAll();
             },
             { crossOrigin: "anonymous" });
     }
