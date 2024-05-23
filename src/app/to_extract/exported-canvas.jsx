@@ -36,12 +36,13 @@ const EditableCanvas = () => {
 
         canvas?.current.on("mouse:over", () => {
         }, []);
+        // рисуем сетку
         for (var i = 0; i < (canvasWidth / grid); i++) {
             canvas.current.add(new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: 'line', stroke: '#ccc', selectable: false }));
             canvas.current.add(new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: 'line', stroke: '#ccc', selectable: false }))
         }
 
-        // snap to grid
+        // привязывание к сетке
 
         canvas.current.on('object:moving', function (options) {
             options.target.set({
@@ -49,21 +50,12 @@ const EditableCanvas = () => {
                 top: Math.round(options.target.top / grid) * grid
             });
         });
+        // и при масштабировании
         canvas.current.on('object:modified', function (options) {
-            var newHeight = (Math.round(options.target.getScaledWidth() / grid)) * grid;
             var newWidth = (Math.round(options.target.getScaledHeight() / grid)) * grid;
-            var oldHeight = (Math.round((options.target.getScaledHeight() / options.target.height) / grid)) * grid;
-            var oldWidth = (Math.round(options.target.width / grid)) * grid;
-            // var oldWidth = options.target.width
-            //newHeight / oldHeight
-            options.target.set({
-                scaleX: 1,
-                scaleY: 1,
-                width: newWidth,
-                height: newHeight
+            options.target.scaleToWidth(newWidth)
 
-            });
-        });
+        })
 
         return () => {
             canvas.current.dispose();
@@ -134,14 +126,10 @@ const EditableCanvas = () => {
             function (img) {
                 const oldWidth = img.width
                 const oldHeight = img.height
-                const gridWidth = (Math.round(img.width / grid)) * grid
-                const gridHeight = (Math.round(img.height / grid)) * grid
-
                 var oImg = img.set({
                     left: 50,
                     top: 100,
-                    scaleX: oldWidth / gridWidth,
-                    ScaleY: oldHeight / gridHeight,
+
                 });
                 canvas.current.add(oImg).renderAll();
             },
