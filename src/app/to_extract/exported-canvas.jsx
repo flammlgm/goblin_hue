@@ -57,7 +57,7 @@ const EditableCanvas = () => {
             // var oldWidth = options.target.width
             //newHeight / oldHeight
             options.target.set({
-                scaleX: newWidth,
+                scaleX: 1,
                 scaleY: 1,
                 width: newWidth,
                 height: newHeight
