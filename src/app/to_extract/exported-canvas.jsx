@@ -23,12 +23,43 @@ const EditableCanvas = () => {
     const [fontstyle, setFontstyle] = useState('normal')
 
     const canvas = useRef(null);
+    var grid = 50;
+    var unitScale = 10;
+    var canvasWidth = 100 * unitScale;
+    var canvasHeight = 100 * unitScale;
+
+    // create grid
+
 
     useEffect(() => {
         canvas.current = initCanvas();
 
         canvas?.current.on("mouse:over", () => {
         }, []);
+        for (var i = 0; i < (canvasWidth / grid); i++) {
+            canvas.current.add(new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: 'line', stroke: '#ccc', selectable: false }));
+            canvas.current.add(new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: 'line', stroke: '#ccc', selectable: false }))
+        }
+
+        // snap to grid
+
+        canvas.current.on('object:moving', function (options) {
+            options.target.set({
+                left: Math.round(options.target.left / grid) * grid,
+                top: Math.round(options.target.top / grid) * grid
+            });
+        });
+        canvas.current.on('object:modified', function (options) {
+            var newWidth = (Math.round(options.target.getScaledHeight() / grid)) * grid;
+            var newHeight = (Math.round(options.target.getScaledWidth() / grid)) * grid;
+
+            options.target.set({
+                width: newWidth,
+                height: newHeight,
+                scaleX: 1,
+                scaleY: 1
+            });
+        });
 
         return () => {
             canvas.current.dispose();
@@ -38,8 +69,8 @@ const EditableCanvas = () => {
 
     const initCanvas = () => (
         new fabric.Canvas('canvas', {
-            height: 600,
-            width: 800,
+            height: canvasHeight,
+            width: canvasWidth,
             backgroundColor: canvasColour,
             selection: false,
             renderOnAddRemove: true,
