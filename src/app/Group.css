@@ -1,0 +1,47 @@
+.group {
+    margin-bottom: 20px; 
+}
+
+.sprites-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+}
+
+.sprite {
+    position: relative;
+    width: calc(100% / 7);
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.sprite:hover img {
+    transform: scale(1.1); 
+}
+
+.sprite img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+
+}
+
+.sprite-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: rgb(255, 0, 0);
+    padding: 5px;
+    font-size: 16px;
+    font-style: bold;
+    text-align: center;
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+}
+
+.sprite:hover .sprite-name {
+    display: block;
+    opacity: 1;
+}
