@@ -1,5 +1,6 @@
 import React from 'react';
 import Group from './Group';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface SpriteMenuProps {
     groups: {
@@ -12,15 +13,19 @@ interface SpriteMenuProps {
 
 const SpriteMenu: React.FC<SpriteMenuProps> = ({ groups, onSelectSprite }) => {
     return (
-        <div className="sprite-menu">
-            {groups.map((group, index) => (
-                <Group
-                    key={index}
-                    title={group.title}
-                    sprites={group.sprites}
-                    onSelectSprite={onSelectSprite} />
-            ))}
-        </div>
+        <ScrollArea className='h-[100%] w-[100%] px-8 rounded-md border'>
+            <div className="sprite-menu">
+                {groups.map((group, index) => (
+                    <Group
+                        key={index}
+                        title={group.title}
+                        sprites={group.sprites}
+                        onSelectSprite={onSelectSprite} />
+                ))}
+            </div>
+
+        </ScrollArea>
+
     );
 }
 
