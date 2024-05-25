@@ -4,6 +4,7 @@ import Group from './Group';
 interface SpriteMenuProps {
     groups: {
         title: string;
+        //@ts-ignore
         sprites: Sprite[];
     }[];
     onSelectSprite: (newSrc: string) => void;

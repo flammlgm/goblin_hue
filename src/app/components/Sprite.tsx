@@ -21,6 +21,7 @@ const Sprite: React.FC<SpriteProps> = ({ name, imageUrl, description, onSelectSp
         console.log(`Поставили выбранное изображение на ${event.target.src}`)
         // Если выбрано другое изображение, сбросить стиль
         if (selectedImage) {
+            //@ts-ignore
             selectedImage.style.filter = "brightness(100%)";
         }
 
