@@ -8,18 +8,16 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 const EditableCanvas = ({ selectedSpriteSrc }) => {
 
-    const history = [];
 
     const buttonStyle = 'bg-buttonBrown mx-1  px-4 py-2 rounded-lg hover:bg-hoveredButtonBrown'
 
-    const ref = useRef();
 
     const [downloadLink, setDownloadLink] = useState('')
     const [downloadName, setDownloadName] = useState('')
-    const [canvasColour, setCanvasColour] = useState('#E8C99C') // #292524 - как цвет фона
-    const [fontstyle, setFontstyle] = useState('normal')
 
+    const ref = useRef();
     const canvas = useRef(null);
+
     var grid = 64;
     var unitScale = 8;
     var canvasHeight = 72 * unitScale;
@@ -80,82 +78,22 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
         new fabric.Canvas('canvas', {
             height: canvasHeight,
             width: canvasWidth,
-            backgroundColor: canvasColour,
+            backgroundColor: '#E8C99C',
             selection: false,
             renderOnAddRemove: true,
         })
     );
-
-    // ====== функции для зума (плохо работали, но возможно починить)
-
-    // useEffect(() => {
-    //     canvas.current?.on('mouse:wheel', function (opt) {
-    //         var delta = opt.e.deltaY;
-    //         var zoom = canvas.current.getZoom();
-    //         zoom *= 0.999 ** delta;
-    //         if (zoom > 20) zoom = 20;
-    //         if (zoom < 0.01) zoom = 0.01;
-    //         canvas.current.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
-    //         opt.e.preventDefault();
-    //         opt.e.stopPropagation();
-    //         var viewpoint = this.viewportTransform;
-    //         if (zoom < 400 / 1000) {
-    //             viewpoint[4] = 200 - 1000 * zoom / 2;
-    //             viewpoint[5] = 200 - 1000 * zoom / 2;
-    //         } else {
-    //             if (viewpoint[4] >= 0) {
-    //                 viewpoint[4] = 0;
-    //             } else if (viewpoint[4] < canvas.current.getWidth() - 1000 * zoom) {
-    //                 viewpoint[4] = canvas.current.getWidth() - 1000 * zoom;
-    //             }
-    //             if (viewpoint[5] >= 0) {
-    //                 viewpoint[5] = 0;
-    //             } else if (viewpoint[5] < canvas.current.getHeight() - 1000 * zoom) {
-    //                 viewpoint[5] = canvas.current.getHeight() - 1000 * zoom;
-    //             }
-    //         }
-    //     })
-    // }, []);
-
-    // function resetZoom() {
-    //     const zoom = canvas.current.getZoom();
-    //     const zoomPoint = new fabric.Point(
-    //         canvasWidth / 2,
-    //         canvasHeight / 2); // центр холста
-    //     canvas.current.zoomToPoint(zoomPoint, 1);
-    // }
 
     function addTextToCanvas(e) {
         let textBox = new fabric.IText("Я текстовое поле!", {
             left: 100,
             top: 100,
             fontSize: 20,
-            fontStyle: fontstyle,
+            fontStyle: 'normal',
             fontFamily: 'serif'
         });
         canvas.current.add(textBox);
 
-    }
-
-
-    // это читает изображение со случайного url из инета
-    function submitURL(e) {
-        let url = document.getElementById("input").value;
-        console.log(`adding image from source ${url}`)
-        fabric.Image.fromURL(
-            url,
-            function (img) {
-                var oImg = img.set({
-                    left: 50,
-                    top: 100,
-                    lockRotation: true
-                });
-                oImg.setControlsVisibility({ mtr: false })
-                canvas.current
-                    .add(oImg)
-                    .renderAll();
-            },
-            { crossOrigin: "anonymous" });
     }
 
     function addSprite(e) {
@@ -189,34 +127,23 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
         setDownloadName("canvas.png");
     }
 
-
-
-
     function deleteElement(e) {
         canvas.current.remove(canvas.current.getActiveObject());
     }
 
-    function undo() {
-        if (canvas.current._objects.length > 0) {
-            history.push(canvas.current._objects.pop());
-        }
-        canvas.current.renderAll();
-    };
     function hotKeyDownload() {
         const link = document.getElementById('downloadLink');
         link.click();
     }
+
     useHotkeys('t', addTextToCanvas)
     useHotkeys('delete', deleteElement)
-    useHotkeys('ctrl + z', undo)
     useHotkeys('ctrl + e', hotKeyDownload)
     useHotkeys('s', hotKeyDownload)
 
     return (
         <ScrollArea>
-
             <div ref={ref} className='mt-2 rounded-lg'>
-
                 <canvas id="canvas" className='rounded-lg' />
                 <div className='mt-2 mb-6 flex-auto flex'>
                     <button className={buttonStyle} onClick={addTextToCanvas}>Добавить текст</button>
@@ -227,18 +154,11 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
                         <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>
                             Скачать изображение
                         </a>
-
                     </div>
-
                 </div>
-
             </div>
             <ScrollBar orientation="horizontal" />
         </ScrollArea>
-
-
-
-
     );
 }
 
