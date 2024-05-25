@@ -14,7 +14,6 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
     // const { selectedObjects, canvas.current, onReady } = useFabricJScanvas.current();
     const ref = useRef();
 
-    const [canvasState, setCanvasState] = useState('');
     const [downloadLink, setDownloadLink] = useState('')
     const [downloadName, setDownloadName] = useState('')
     const [canvasColour, setCanvasColour] = useState('#E8C99C') // #292524 - как цвет фона
@@ -28,6 +27,11 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
 
     useEffect(() => {
         canvas.current = initCanvas();
+
+        // оставлено для дальнейшей отладки - выводит в консоли инф. оо объекта холста
+        function showActiveElement(e) {
+            console.log(canvas.current.getActiveObject())
+        }
 
         // рисуем сетку
         for (var i = 0; i < (canvasWidth / grid) + 1; i++) {
@@ -46,6 +50,7 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
         // привязывание к сетке
 
         canvas.current.on('object:moving', function (options) {
+            // условие - привязываем к сетке только спрайты. Не текст!
             if (options.target._element) {
                 options.target.set({
                     left: Math.round(options.target.left / grid) * grid,
@@ -56,6 +61,7 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
         });
         // и при масштабировании
         canvas.current.on('object:modified', function (options) {
+            // условие - привязываем к сетке только спрайты. Не текст!
             if (options.target._element) {
                 var newWidth = (Math.round(options.target.getScaledHeight() / grid)) * grid;
                 options.target.scaleToWidth(newWidth)
@@ -115,7 +121,7 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
         const zoomPoint = new fabric.Point(
             canvasWidth / 2,
             canvasHeight / 2); // центр холста
-        canvas.current.zoomToPoint(zoomPoint, 1 / zoom);
+        canvas.current.zoomToPoint(zoomPoint, 1);
     }
 
     function addTextToCanvas(e) {
@@ -150,7 +156,6 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
             },
             { crossOrigin: "anonymous" });
     }
-    //<img src="../images/logo.png" id="brown-logo"></img>
 
     function addSprite(e) {
         // если у нас не выбрано никакого изображения
@@ -176,7 +181,6 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
     }
     function convertToImg(e) {
         // перед загрузкой, надо его отзумить в полный размер
-        //   const svg = canvas.current.toSVG();
         setDownloadLink(canvas.current.toDataURL({
             format: "png"
         }));
@@ -185,13 +189,7 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
     }
 
 
-    function changeColour(e, colour) {
-        canvas.current.set('backgroundColor', colour).renderAll()
-    }
 
-    function showActiveElement(e) {
-        console.log(canvas.current.getActiveObject())
-    }
 
     function deleteElement(e) {
         canvas.current.remove(canvas.current.getActiveObject());
@@ -221,8 +219,8 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
                 <button className='border-2' onClick={addTextToCanvas}>Add Text</button>
                 <button className='border-2' onClick={addSprite}>Добавить спрайт</button>
                 <button className='border-2' onClick={resetZoom}>Сбросить зум</button>
-                <button className='border-2' onClick={deleteElement}>Delete Element</button>
-                <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>Print As Image</a>
+                <button className='border-2' onClick={deleteElement}>Удалить</button>
+                <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>Скачать изображение</a>
                 <br />
                 <form>
                     <label>Enter Image Url here : </label>
@@ -237,11 +235,3 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
 }
 
 export default EditableCanvas;
-
-{/* <div onChange={handleDivChange}>
-<input type="radio" id="normal" name="contact" value="normal" onchange={handleRadio} />
-<label for="normal">Normal</label>
-
-<input type="radio" id="italic" name="contact" value="italic" onchange={handleRadio} />
-<label for="italic">Italic</label>
-</div> */}
