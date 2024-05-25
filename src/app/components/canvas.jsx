@@ -3,6 +3,7 @@ import { fabric } from "fabric";
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { ArrowDownToLine } from 'lucide-react';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 
 const EditableCanvas = ({ selectedSpriteSrc }) => {
@@ -137,7 +138,7 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
     }
 
 
-
+    // это читает изображение со случайного url из инета
     function submitURL(e) {
         let url = document.getElementById("input").value;
         console.log(`adding image from source ${url}`)
@@ -212,10 +213,12 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
     useHotkeys('s', hotKeyDownload)
 
     return (
-        <>
+        <ScrollArea>
+
             <div ref={ref} className='mt-2 rounded-lg'>
+
                 <canvas id="canvas" className='rounded-lg' />
-                <div className='mt-2 flex-auto flex'>
+                <div className='mt-2 mb-8 flex-auto flex'>
                     <button className={buttonStyle} onClick={addTextToCanvas}>Добавить текст</button>
                     <button className={buttonStyle} onClick={addSprite}>Добавить спрайт</button>
                     <button className='bg-buttonRed flex items-flex  mx-1 px-4 py-2 rounded-lg hover:bg-hoveredButtonRed' onClick={deleteElement}>Удалить</button>
@@ -224,21 +227,18 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
                         <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>
                             Скачать изображение
                         </a>
+
                     </div>
 
                 </div>
 
-
-                {/* <br />
-                <form>
-                    <label>Enter Image Url here : </label>
-                    <input id="input"></input>
-                    <button onClick={submitURL} type="button">Add Image With Url</button>
-                </form> */}
             </div>
+            <ScrollBar orientation="horizontal" />
+        </ScrollArea>
 
 
-        </>
+
+
     );
 }
 
