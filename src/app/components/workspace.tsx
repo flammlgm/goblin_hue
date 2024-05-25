@@ -1,6 +1,6 @@
 
 "use client"
-import EditableCanvas from '../to_extract/exported-canvas'
+import EditableCanvas from './canvas'
 interface WorkspaceProps {
     selectedSpriteSrc: string;
 
