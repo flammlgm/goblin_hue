@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { spriteGroups } from "../global_objects/sprite_group";
 import Header from "./components/header";
 import Workspace from "./components/workspace";
 import SpriteMenu from "./components/sprite-menu";
@@ -18,7 +18,7 @@ export default function Home() {
        '>
 
         <Workspace />
-        <SpriteMenu />
+        <SpriteMenu groups={spriteGroups} />
       </div>
     </div>
 

@@ -1,10 +1,16 @@
-const SpriteMenu = () => {
+import React from 'react';
+import Group from './Group';
+
+interface SpriteMenuProps {
+    groups: { title: string; sprites: Sprite[] }[];
+}
+
+const SpriteMenu: React.FC<SpriteMenuProps> = ({ groups }) => {
     return (
-        <div className="w-[40%] h-full flex ml-auto px-0 
-        border-2
-        border-gold
-        ">
-            Здесь будет библиотека спрайтов
+        <div className="sprite-menu">
+            {groups.map((group, index) => (
+                <Group key={index} title={group.title} sprites={group.sprites} />
+            ))}
         </div>
     );
 }

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fabric } from "fabric";
-import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import { useHotkeys } from 'react-hotkeys-hook'
-import { Fullscreen } from 'lucide-react';
 
 
 
@@ -28,9 +26,6 @@ const EditableCanvas = () => {
     var canvasHeight = 60 * unitScale;
     var canvasWidth = 80 * unitScale;
 
-    // create grid
-
-
     useEffect(() => {
         canvas.current = initCanvas();
 
@@ -38,8 +33,14 @@ const EditableCanvas = () => {
         }, []);
         // рисуем сетку
         for (var i = 0; i < (canvasWidth / grid); i++) {
-            canvas.current.add(new fabric.Line([i * grid, 0, i * grid, canvasHeight], { type: 'line', stroke: '#292524', selectable: false }));
-            canvas.current.add(new fabric.Line([0, i * grid, canvasWidth, i * grid], { type: 'line', stroke: '#292524', selectable: false }))
+            canvas.current.add(new fabric.Line(
+                [i * grid, 0, i * grid, canvasHeight],
+                { type: 'line', stroke: '#292524', selectable: false }
+            ));
+            canvas.current.add(new fabric.Line(
+                [0, i * grid, canvasWidth, i * grid],
+                { type: 'line', stroke: '#292524', selectable: false }
+            ))
         }
 
         // привязывание к сетке
@@ -124,8 +125,6 @@ const EditableCanvas = () => {
         fabric.Image.fromURL(
             url,
             function (img) {
-                const oldWidth = img.width
-                const oldHeight = img.height
                 var oImg = img.set({
                     left: 50,
                     top: 100,
@@ -189,10 +188,6 @@ const EditableCanvas = () => {
 
     return (
         <>
-            {/* <FabricJSCanvas
-                className="h-full w-[100%]"
-                onReady={onReady}
-                onWheel={wheelHandler} /> */}
             <div ref={ref}>
                 <canvas id="canvas" ref={ref} />
 

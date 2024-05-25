@@ -14,6 +14,7 @@
     "clsx": "^2.1.0",
     "fabric": "^5.2.4",
     "fabricjs-react": "^1.2.2",
+    "fs": "^0.0.1-security",
     "lucide-react": "^0.371.0",
     "next": "14.2.2",
     "react": "^18",

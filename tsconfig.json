@@ -32,7 +32,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/to_extract/exported-canvas.jsx"
+    "src/app/to_extract/exported-canvas.jsx",
+    "src/utils/read-dir.js"
   ],
   "exclude": [
     "node_modules"
