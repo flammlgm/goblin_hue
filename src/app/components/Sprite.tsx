@@ -36,7 +36,7 @@ const Sprite: React.FC<SpriteProps> = ({ name, imageUrl, description, onSelectSp
                 onClick={handleClick}
             />
 
-            <div className="sprite-name">{name}</div>
+            {/* <div className="sprite-name">{name}</div> */}
             <div className="sprite-info">
                 <p>{description}</p>
             </div>

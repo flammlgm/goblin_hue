@@ -9,7 +9,7 @@ interface WorkspaceProps {
 const Workspace: React.FC<WorkspaceProps> = ({ selectedSpriteSrc }) => {
 
     return (
-        <div id="workspace" className="w-[60%] h-full flex pl-8
+        <div id="workspace" className="w-[60%] h-full flex px-4
         border-2
         border-gold
         ">

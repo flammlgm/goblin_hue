@@ -2,16 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { fabric } from "fabric";
 import { useHotkeys } from 'react-hotkeys-hook'
 
-
+import { ArrowDownToLine } from 'lucide-react';
 
 
 const EditableCanvas = ({ selectedSpriteSrc }) => {
 
     const history = [];
 
-    // const brown, dbrown, gold = '', '', ''
+    const buttonStyle = 'bg-[#5D5344] mx-1  px-4 py-2 rounded-lg hover:bg-[#7B6A4F]'
 
-    // const { selectedObjects, canvas.current, onReady } = useFabricJScanvas.current();
     const ref = useRef();
 
     const [downloadLink, setDownloadLink] = useState('')
@@ -213,20 +212,28 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
 
     return (
         <>
-            <div ref={ref}>
-                <canvas id="canvas" ref={ref} />
+            <div ref={ref} className='mt-2 rounded-lg'>
+                <canvas id="canvas" className='rounded-lg' />
+                <div className='mt-2 flex-auto flex'>
+                    <button className={buttonStyle} onClick={addTextToCanvas}>Добавить текст</button>
+                    <button className={buttonStyle} onClick={addSprite}>Добавить спрайт</button>
+                    <button className='bg-[rgb(116,69,69)] flex items-flex  mx-1 px-4 py-2 rounded-lg hover:bg-[rgb(128,76,76)]' onClick={deleteElement}>Удалить</button>
+                    <div className='bg-[rgb(88,120,72)] flex items-flex  mx-1 pr-4 py-2 rounded-lg hover:bg-[rgb(93,128,76)]'>
+                        <ArrowDownToLine className='flex' width={40} />
+                        <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>
+                            Скачать изображение
+                        </a>
+                    </div>
 
-                <button className='border-2' onClick={addTextToCanvas}>Add Text</button>
-                <button className='border-2' onClick={addSprite}>Добавить спрайт</button>
-                <button className='border-2' onClick={resetZoom}>Сбросить зум</button>
-                <button className='border-2' onClick={deleteElement}>Удалить</button>
-                <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>Скачать изображение</a>
-                <br />
+                </div>
+
+
+                {/* <br />
                 <form>
                     <label>Enter Image Url here : </label>
                     <input id="input"></input>
                     <button onClick={submitURL} type="button">Add Image With Url</button>
-                </form>
+                </form> */}
             </div>
 
 

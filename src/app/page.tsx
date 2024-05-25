@@ -17,7 +17,7 @@ export default function Home() {
 
     return (
 
-        <div className="h-screen">
+        <div className="h-screen w-[100%]">
             <Header />
             <div id="screen" className='bg-brown 
       w-auto 
