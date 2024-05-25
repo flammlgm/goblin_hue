@@ -218,7 +218,7 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
             <div ref={ref} className='mt-2 rounded-lg'>
 
                 <canvas id="canvas" className='rounded-lg' />
-                <div className='mt-2 mb-8 flex-auto flex'>
+                <div className='mt-2 mb-6 flex-auto flex'>
                     <button className={buttonStyle} onClick={addTextToCanvas}>Добавить текст</button>
                     <button className={buttonStyle} onClick={addSprite}>Добавить спрайт</button>
                     <button className='bg-buttonRed flex items-flex  mx-1 px-4 py-2 rounded-lg hover:bg-hoveredButtonRed' onClick={deleteElement}>Удалить</button>
