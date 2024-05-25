@@ -5,7 +5,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 
 
 
-const EditableCanvas = () => {
+const EditableCanvas = ({ selectedSpriteSrc }) => {
 
     const history = [];
 
@@ -21,22 +21,22 @@ const EditableCanvas = () => {
     const [fontstyle, setFontstyle] = useState('normal')
 
     const canvas = useRef(null);
-    var grid = 50;
-    var unitScale = 10;
-    var canvasHeight = 60 * unitScale;
-    var canvasWidth = 80 * unitScale;
+    var grid = 64;
+    var unitScale = 8;
+    var canvasHeight = 72 * unitScale;
+    var canvasWidth = 104 * unitScale;
 
     useEffect(() => {
         canvas.current = initCanvas();
 
-        canvas?.current.on("mouse:over", () => {
-        }, []);
         // рисуем сетку
-        for (var i = 0; i < (canvasWidth / grid); i++) {
+        for (var i = 0; i < (canvasWidth / grid) + 1; i++) {
             canvas.current.add(new fabric.Line(
                 [i * grid, 0, i * grid, canvasHeight],
                 { type: 'line', stroke: '#292524', selectable: false }
             ));
+        }
+        for (var i = 0; i < (canvasHeight / grid) + 1; i++) {
             canvas.current.add(new fabric.Line(
                 [0, i * grid, canvasWidth, i * grid],
                 { type: 'line', stroke: '#292524', selectable: false }
@@ -46,15 +46,21 @@ const EditableCanvas = () => {
         // привязывание к сетке
 
         canvas.current.on('object:moving', function (options) {
-            options.target.set({
-                left: Math.round(options.target.left / grid) * grid,
-                top: Math.round(options.target.top / grid) * grid
-            });
+            if (options.target._element) {
+                options.target.set({
+                    left: Math.round(options.target.left / grid) * grid,
+                    top: Math.round(options.target.top / grid) * grid
+                });
+            }
+
         });
         // и при масштабировании
         canvas.current.on('object:modified', function (options) {
-            var newWidth = (Math.round(options.target.getScaledHeight() / grid)) * grid;
-            options.target.scaleToWidth(newWidth)
+            if (options.target._element) {
+                var newWidth = (Math.round(options.target.getScaledHeight() / grid)) * grid;
+                options.target.scaleToWidth(newWidth)
+            }
+
 
         })
 
@@ -104,6 +110,13 @@ const EditableCanvas = () => {
         })
     }, []);
 
+    function resetZoom() {
+        const zoom = canvas.current.getZoom();
+        const zoomPoint = new fabric.Point(
+            canvasWidth / 2,
+            canvasHeight / 2); // центр холста
+        canvas.current.zoomToPoint(zoomPoint, 1 / zoom);
+    }
 
     function addTextToCanvas(e) {
         let textBox = new fabric.IText("Я текстовое поле!", {
@@ -137,14 +150,28 @@ const EditableCanvas = () => {
             },
             { crossOrigin: "anonymous" });
     }
-    function addBrown(e) {
-        console.log(`adding image from source 'http://fabricjs.com/assets/pug_small.jpg'`)
-        fabric.Image.fromURL('http://fabricjs.com/assets/pug_small.jpg', function (myImg) {
+    //<img src="../images/logo.png" id="brown-logo"></img>
 
-            //i create an extra var for to change some image properties
-            var img1 = myImg.set({ left: 100, top: 100 });
-            canvas.current.add(img1).renderAll();;
-        },
+    function addSprite(e) {
+        // если у нас не выбрано никакого изображения
+        if (selectedSpriteSrc === '') {
+            return
+        }
+
+        console.log(selectedSpriteSrc)
+        fabric.Image.fromURL(
+            selectedSpriteSrc,
+            function (img) {
+                var oImg = img.set({
+                    left: 64,
+                    top: 64,
+                    lockRotation: true
+                });
+                oImg.setControlsVisibility({ mtr: false })
+                canvas.current
+                    .add(oImg)
+                    .renderAll();
+            },
             { crossOrigin: "anonymous" });
     }
     function convertToImg(e) {
@@ -192,8 +219,8 @@ const EditableCanvas = () => {
                 <canvas id="canvas" ref={ref} />
 
                 <button className='border-2' onClick={addTextToCanvas}>Add Text</button>
-                <button className='border-2' onClick={addBrown}>Добавить бурого</button>
-                <button className='border-2' onClick={showActiveElement}>Show active element</button>
+                <button className='border-2' onClick={addSprite}>Добавить спрайт</button>
+                <button className='border-2' onClick={resetZoom}>Сбросить зум</button>
                 <button className='border-2' onClick={deleteElement}>Delete Element</button>
                 <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>Print As Image</a>
                 <br />
