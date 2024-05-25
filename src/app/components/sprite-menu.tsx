@@ -13,7 +13,7 @@ interface SpriteMenuProps {
 
 const SpriteMenu: React.FC<SpriteMenuProps> = ({ groups, onSelectSprite }) => {
     return (
-        <ScrollArea className='h-[100%] w-[100%] px-8 rounded-md border'>
+        <ScrollArea className='h-[100%] w-[100%] px-8  border-2 border-gold'>
             <div className="sprite-menu">
                 {groups.map((group, index) => (
                     <Group

@@ -9,7 +9,7 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
 
     const history = [];
 
-    const buttonStyle = 'bg-[#5D5344] mx-1  px-4 py-2 rounded-lg hover:bg-[#7B6A4F]'
+    const buttonStyle = 'bg-buttonBrown mx-1  px-4 py-2 rounded-lg hover:bg-hoveredButtonBrown'
 
     const ref = useRef();
 
@@ -85,43 +85,44 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
         })
     );
 
+    // ====== функции для зума (плохо работали, но возможно починить)
 
-    useEffect(() => {
-        canvas.current?.on('mouse:wheel', function (opt) {
-            var delta = opt.e.deltaY;
-            var zoom = canvas.current.getZoom();
-            zoom *= 0.999 ** delta;
-            if (zoom > 20) zoom = 20;
-            if (zoom < 0.01) zoom = 0.01;
-            canvas.current.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
-            opt.e.preventDefault();
-            opt.e.stopPropagation();
-            var viewpoint = this.viewportTransform;
-            if (zoom < 400 / 1000) {
-                viewpoint[4] = 200 - 1000 * zoom / 2;
-                viewpoint[5] = 200 - 1000 * zoom / 2;
-            } else {
-                if (viewpoint[4] >= 0) {
-                    viewpoint[4] = 0;
-                } else if (viewpoint[4] < canvas.current.getWidth() - 1000 * zoom) {
-                    viewpoint[4] = canvas.current.getWidth() - 1000 * zoom;
-                }
-                if (viewpoint[5] >= 0) {
-                    viewpoint[5] = 0;
-                } else if (viewpoint[5] < canvas.current.getHeight() - 1000 * zoom) {
-                    viewpoint[5] = canvas.current.getHeight() - 1000 * zoom;
-                }
-            }
-        })
-    }, []);
+    // useEffect(() => {
+    //     canvas.current?.on('mouse:wheel', function (opt) {
+    //         var delta = opt.e.deltaY;
+    //         var zoom = canvas.current.getZoom();
+    //         zoom *= 0.999 ** delta;
+    //         if (zoom > 20) zoom = 20;
+    //         if (zoom < 0.01) zoom = 0.01;
+    //         canvas.current.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+    //         opt.e.preventDefault();
+    //         opt.e.stopPropagation();
+    //         var viewpoint = this.viewportTransform;
+    //         if (zoom < 400 / 1000) {
+    //             viewpoint[4] = 200 - 1000 * zoom / 2;
+    //             viewpoint[5] = 200 - 1000 * zoom / 2;
+    //         } else {
+    //             if (viewpoint[4] >= 0) {
+    //                 viewpoint[4] = 0;
+    //             } else if (viewpoint[4] < canvas.current.getWidth() - 1000 * zoom) {
+    //                 viewpoint[4] = canvas.current.getWidth() - 1000 * zoom;
+    //             }
+    //             if (viewpoint[5] >= 0) {
+    //                 viewpoint[5] = 0;
+    //             } else if (viewpoint[5] < canvas.current.getHeight() - 1000 * zoom) {
+    //                 viewpoint[5] = canvas.current.getHeight() - 1000 * zoom;
+    //             }
+    //         }
+    //     })
+    // }, []);
 
-    function resetZoom() {
-        const zoom = canvas.current.getZoom();
-        const zoomPoint = new fabric.Point(
-            canvasWidth / 2,
-            canvasHeight / 2); // центр холста
-        canvas.current.zoomToPoint(zoomPoint, 1);
-    }
+    // function resetZoom() {
+    //     const zoom = canvas.current.getZoom();
+    //     const zoomPoint = new fabric.Point(
+    //         canvasWidth / 2,
+    //         canvasHeight / 2); // центр холста
+    //     canvas.current.zoomToPoint(zoomPoint, 1);
+    // }
 
     function addTextToCanvas(e) {
         let textBox = new fabric.IText("Я текстовое поле!", {
@@ -217,8 +218,8 @@ const EditableCanvas = ({ selectedSpriteSrc }) => {
                 <div className='mt-2 flex-auto flex'>
                     <button className={buttonStyle} onClick={addTextToCanvas}>Добавить текст</button>
                     <button className={buttonStyle} onClick={addSprite}>Добавить спрайт</button>
-                    <button className='bg-[rgb(116,69,69)] flex items-flex  mx-1 px-4 py-2 rounded-lg hover:bg-[rgb(128,76,76)]' onClick={deleteElement}>Удалить</button>
-                    <div className='bg-[rgb(88,120,72)] flex items-flex  mx-1 pr-4 py-2 rounded-lg hover:bg-[rgb(93,128,76)]'>
+                    <button className='bg-buttonRed flex items-flex  mx-1 px-4 py-2 rounded-lg hover:bg-hoveredButtonRed' onClick={deleteElement}>Удалить</button>
+                    <div className='bg-buttonGreen flex items-flex  mx-1 pr-4 py-2 rounded-lg hover:bg-hoveredButtonGreen'>
                         <ArrowDownToLine className='flex' width={40} />
                         <a id='downloadLink' href={downloadLink} download={downloadName} onClick={convertToImg}>
                             Скачать изображение

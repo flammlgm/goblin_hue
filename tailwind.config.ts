@@ -77,6 +77,12 @@ const config = {
       'gold': '#bdb595',
       'brown': '#292524',
       'dbrown': '#1c1917',
+      'buttonBrown': '#5D5344',
+      'hoveredButtonBrown': '#7B6A4F',
+      'buttonRed': 'rgb(116,69,69)',
+      'hoveredButtonRed': 'rgb(152,96,96)',
+      'buttonGreen': 'rgb(88,120,72)',
+      'hoveredButtonGreen': 'rgb(111,147,92)'
     }
   },
   plugins: [require("tailwindcss-animate")],
