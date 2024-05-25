@@ -10,11 +10,11 @@ interface GroupProps {
 
 const Group: React.FC<GroupProps> = ({ title, sprites, onSelectSprite }) => {
     return (
-        <div className="group">
+        <div className="group mb-5">
             <h2>{title}</h2>
-            <ul className="sprites-container">
+            <ul className="flex flex-wrap justify-start">
                 {sprites.map((sprite, index) => (
-                    <li key={index} className="sprite">
+                    <li key={index} className="  box-border hover:transform hover:scale-110">
                         <Sprite
                             name={sprite.name}
                             imageUrl={sprite.imageUrl}

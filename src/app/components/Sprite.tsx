@@ -1,4 +1,3 @@
-"use client"
 
 import React, { useState } from 'react';
 
@@ -36,9 +35,6 @@ const Sprite: React.FC<SpriteProps> = ({ name, imageUrl, description, onSelectSp
                 onClick={handleClick}
             />
 
-            {/* Элемент с названием спрайта */}
-            {/* комментарий: А НАХЕРА ЕМУ ИМЯ ОТОБРАЖАТЬ?! 
-            ОНО ЗАНИМАЕТ ГОРАЗДО БЛЬШЕ МЕСТА НА ЭКРАНЕ, ЧЕМ САМ СПРАЙТ*/}
             <div className="sprite-name">{name}</div>
             <div className="sprite-info">
                 <p>{description}</p>
